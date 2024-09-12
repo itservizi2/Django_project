@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from .models import Profile
 import pdfkit
 from django.http import HttpResponse
 from django.template import loader
 import io
+from django.core.files import File
+from .models import Profile
 
 
 # Create your views here.
@@ -18,9 +19,17 @@ def accept(request):
         university = request.POST.get("university", "")
         previous_work = request.POST.get("previous_work", "")
         skills = request.POST.get("skills", "")
+        if 'photo' in request.FILES:
+            photo = request.FILES['photo']
+        else:
+            photo = None
 
-        profile = Profile(name=name, email=email, phone=phone, summary=summary, degree=degree, school=school,
-                          university=university, previous_work=previous_work, skills=skills)
+            default_photo = open('pdf/default.jpg', 'rb')
+            photo = File(default_photo)
+
+        profile = Profile.objects.create(name=name, email=email, phone=phone, summary=summary, degree=degree,
+                                         school=school,
+                                         university=university, previous_work=previous_work, skills=skills, photo=photo)
         profile.save()
 
     return render(request, 'pdf/accept.html')

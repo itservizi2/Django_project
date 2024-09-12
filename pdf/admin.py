@@ -1,5 +1,7 @@
 from django.contrib import admin
 from .models import Profile
-# Register your models here.
-admin.site.register(Profile)
 
+list_display = (
+    'photo', 'name', 'email', 'phone', 'summary', 'degree', 'school', 'university', 'previous_work', 'skills')
+
+admin.site.register(Profile)

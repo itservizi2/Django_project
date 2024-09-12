@@ -13,6 +13,15 @@
   <h2>{{user_profile.phone}}</h2>
   <hr/>
   <br/>
+  {% if photo_url %}
+    <img src="{{photo_url}}" alt="Profile Photo">
+  {% else %}
+    <p>No photo available</p>
+  {% endif %}
+
+{#  <img src="{{ photo_url }}" alt="Profile Photo">#}
+{#  <img src="{{ user_profile.photo.url }}" width="100px">#}
+  <br/>
   <p>Summary</p>
   <p>{{user_profile.summary}}</p>
   <hr/>
